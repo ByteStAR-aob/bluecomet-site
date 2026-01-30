@@ -1,195 +1,1123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BlueComet.Work</title>
-  <style>
-    :root { --glow: #4facfe; --bg: #05070a; }
-    body {
-      background: var(--bg);
-      color: #fff;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
-      margin: 0;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>BlueComet.Work - Ai-TONE (Local)</title>
+<style>
+:root{
+  --bg:#0b0f14; --card:#0f1720; --muted:#9aa6b2;
+  --accent1: #00d4ff; --accent2:#6a00ff;
+  --glow: 0 8px 30px rgba(0,212,255,0.12);
+  --glass: rgba(255,255,255,0.03);
+  --danger1:#ff6b6b; --danger2:#ff9a6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,Segoe UI,system-ui,Arial;background:linear-gradient(180deg,#05060a 0%, #08111a 100%);color:#e6eef6}
+.header{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{
+  width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  display:flex;align-items:center;justify-content:center;color:#03121b;font-weight:800;box-shadow:var(--glow);
+  font-family:monospace;
+}
+.title{font-weight:700;font-size:18px;letter-spacing:0.6px}
+.header-right{display:flex;align-items:center;gap:10px}
+.icon-btn{
+  background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:10px;color:var(--accent1);cursor:pointer;
+  display:flex;align-items:center;gap:8px;backdrop-filter:blur(6px)
+}
+.icon-btn.lock{color:#ffd36a}
+.icon-btn.note{color:#9ef7c8}
+.container{padding:18px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+.card{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;overflow:hidden;box-shadow:0 6px 30px rgba(0,0,0,0.6);position:relative;
+  transition:transform .22s ease, box-shadow .22s ease;
+  border:1px solid rgba(255,255,255,0.03);
+}
+.card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.7)}
+.cover{
+  width:100%;aspect-ratio:1/1;display:block;object-fit:cover;background:#0b0f14;
+  box-shadow: inset 0 -30px 60px rgba(0,0,0,0.55);
+  position:relative;
+}
+.card-meta{padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+.p-title{font-weight:700;font-size:15px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.btn{
+  padding:8px 10px;border-radius:8px;border:none;background:rgba(255,255,255,0.03);color:var(--muted);cursor:pointer;font-weight:700;
+  font-size:13px;
+}
+.btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#02111a;box-shadow:var(--glow)}
+.btn.danger{background:linear-gradient(90deg,var(--danger1),var(--danger2));color:white}
+.lock-badge{position:absolute;top:10px;left:10px;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,0.5);color:#ffd36a;font-weight:700;border:1px solid rgba(255,255,255,0.04)}
+.fab{
+  position:fixed;right:28px;bottom:28px;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  border:none;color:#02111a;font-size:34px;box-shadow:0 12px 40px rgba(0,212,255,0.18);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:60;
+}
+.modal-back{position:fixed;inset:0;background:rgba(2,6,10,0.6);display:none;align-items:center;justify-content:center;z-index:80}
+.modal{width:92%;max-width:900px;background:linear-gradient(180deg,#061017, #07151f);border-radius:14px;padding:18px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 30px 80px rgba(0,0,0,0.8)}
+.form-row{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+.input, textarea{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:inherit;font-size:14px}
+textarea{min-height:240px;font-family:Menlo,monospace;resize:vertical}
+.small{font-size:13px;color:var(--muted)}
+.toolbar{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+.lock-list{padding:12px;display:flex;flex-direction:column;gap:8px}
+.notice{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px;color:var(--muted);font-size:13px}
+.row{display:flex;gap:8px;align-items:center}
+.input-file{display:none}
+.thumbnail{width:60px;height:60px;border-radius:8px;object-fit:cover;border:1px solid rgba(255,255,255,0.04)}
+.footer{padding:14px;color:var(--muted);font-size:13px;text-align:center}
+small.hint{color:var(--muted);font-size:12px;margin-top:6px;display:block}
 
-    .nav {
-      position: fixed;
-      top: 20px;
-      display: flex;
-      gap: 20px;
-      z-index: 1000;
-    }
-    .nav a {
-      color: #555;
-      text-decoration: none;
-      font-size: 12px;
-      border: 1px solid #333;
-      padding: 5px 15px;
-      border-radius: 20px;
-    }
+/* ===== Notes Vault UI (match your vibe) ===== */
+.note-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+.note-item{
+  display:flex;justify-content:space-between;gap:10px;align-items:center;
+  padding:10px;border-radius:12px;border:1px dashed rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.02);
+}
+.note-item small{color:var(--muted)}
+.note-view{
+  white-space:pre-wrap; word-break:break-word; line-height:1.7;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:12px;
+  padding:12px;
+  max-height: 280px;
+  overflow:auto;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(255,255,255,0.02);
+  color:var(--muted);font-size:12px
+}
+.pill b{color:#e6eef6}
 
-    .comet-container {
-      margin-top: 100px;
-      text-align: center;
-      width: 100%;
-      max-width: 600px;
-      padding: 60px;
-      border-radius: 20px;
-      background: linear-gradient(145deg, #0a0c10, #111);
-      border: 1px solid #222;
-      position: relative;
-    }
-
-    h2 {
-      font-size: 3rem;
-      margin: 0;
-      background: linear-gradient(to right, #fff, var(--glow));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .btn {
-      margin-top: 30px;
-      padding: 15px 40px;
-      background: transparent;
-      border: 1px solid var(--glow);
-      color: var(--glow);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: 0.3s;
-    }
-    .btn:hover { background: var(--glow); color: #000; box-shadow: 0 0 20px var(--glow); }
-
-    /* Dropdown */
-    .dropdown {
-      display: inline-block;
-      position: relative;
-      margin-top: 30px;
-    }
-
-    .dropmenu {
-      display: none;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      top: calc(100% + 12px);
-      min-width: 310px;
-      background: rgba(10, 12, 16, 0.98);
-      border: 1px solid rgba(79, 172, 254, 0.35);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.55);
-      z-index: 999;
-      text-align: left;
-      backdrop-filter: blur(8px);
-    }
-
-    .dropmenu a {
-      display: block;
-      padding: 12px 14px;
-      text-decoration: none;
-      color: #e8f4ff;
-      font-size: 14px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      line-height: 1.25;
-    }
-    .dropmenu a:last-child { border-bottom: none; }
-
-    .dropmenu a:hover {
-      background: rgba(79, 172, 254, 0.10);
-    }
-
-    .sub {
-      display: block;
-      margin-top: 4px;
-      font-size: 12px;
-      color: rgba(232,244,255,0.72);
-    }
-
-    .tag {
-      display: inline-block;
-      margin-left: 8px;
-      font-size: 11px;
-      color: #9fd6ff;
-      border: 1px solid rgba(79, 172, 254, 0.35);
-      padding: 2px 8px;
-      border-radius: 999px;
-      opacity: 0.95;
-    }
-
-    .open .dropmenu { display: block; }
-  </style>
+@media(max-width:600px){
+  .header{padding:10px}
+  .title{font-size:16px}
+  .container{padding:10px;grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+  .fab{width:56px;height:56px;right:18px;bottom:18px}
+}
+</style>
 </head>
 
 <body>
-  <div class="nav">
-    <a href="index.html">Ai-TONE</a>
-    <a href="#" style="border-color: var(--glow); color: var(--glow);">BlueComet</a>
-    <a href="atob.html">ATØB</a>
+  <div class="header">
+    <div class="brand">
+      <div class="logo">A2B</div>
+      <div>
+        <div class="title">🚀BlueComet☄️️ - HTML Edit/View/Download</div>
+        <div class="small">Create HTML projects • Store covers • Password-lock • Notes Vault</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" id="importBtn">Import</button>
+      <button class="icon-btn note" id="notesBtn">📝 Notes</button>
+      <button class="icon-btn lock" id="vaultBtn">🔒 Vault</button>
+    </div>
   </div>
 
-  <div class="comet-container">
-    <h2>BlueComet.Work</h2>
+  <main id="main" class="container"></main>
 
-    <div class="dropdown" id="bcDropdown">
-      <button class="btn" id="bcBtn" type="button" aria-haspopup="true" aria-expanded="false">
-        SubDomains ▾
-      </button>
+  <div class="footer">
+    <div style="display:flex;justify-content:center;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="exportBtn">Export All (JSON)</button>
+      <button class="btn" id="clearBtn">Clear All (dev)</button>
+    </div>
+    <small class="hint">Projects + notes are stored locally (localStorage). Locked projects and encrypted notes require their password/passphrase to open.</small>
+  </div>
 
-      <div class="dropmenu" id="bcMenu" role="menu" aria-label="BlueComet subdomains">
-        <a role="menuitem" href="https://bytestar.bluecomet.work" target="_blank" rel="noopener">
-          ByteStAR <span class="tag">LIVE</span>
-          <span class="sub">bytestar.bluecomet.work</span>
-        </a>
+  <button class="fab" id="newBtn">+</button>
 
-        <a role="menuitem" href="https://mcdaylight.bluecomet.work" target="_blank" rel="noopener">
-          MC-Daylight Packets <span class="tag">LIVE</span>
-          <span class="sub">mcdaylight.bluecomet.work</span>
-        </a>
-
-        <a role="menuitem" href="https://materials.bluecomet.work" target="_blank" rel="noopener">
-          Materials Calculator <span class="tag">LIVE</span>
-          <span class="sub">materials.bluecomet.work</span>
-        </a>
+  <!-- Modal for editor -->
+  <div class="modal-back" id="editorModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <div style="font-weight:800">Create / Edit Project</div>
+        <div class="toolbar">
+          <button class="btn" id="previewBtn">Preview</button>
+          <button class="btn" id="cancelEdit">Close</button>
+        </div>
+      </div>
+      <div class="form-row">
+        <input class="input" id="projTitle" placeholder="Project Title" />
+        <label class="icon-btn" style="cursor:pointer">
+          <input type="file" accept="image/*" id="coverInput" class="input-file" />
+          Upload Cover
+        </label>
+      </div>
+      <div style="margin-bottom:8px" class="small">Cover will be saved at 3000×3000 (scaled) so it can be used as a high-res thumbnail or downloaded.</div>
+      <textarea id="htmlEditor" placeholder="Paste your HTML here (full page or snippet)"></textarea>
+      <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px">
+        <button class="btn" id="saveBtn">💾 Save</button>
+        <button class="btn danger" id="cancelSave">Cancel</button>
       </div>
     </div>
   </div>
 
-  <script>
-    (function () {
-      const dd = document.getElementById('bcDropdown');
-      const btn = document.getElementById('bcBtn');
+  <!-- Lock prompt modal -->
+  <div class="modal-back" id="lockModal">
+    <div class="modal">
+      <div style="font-weight:800">🔐 Lock this Project?</div>
+      <div class="notice">Choose a password to encrypt and lock this file. You will need this password to open or share the file later.</div>
+      <div class="form-row" style="margin-top:12px">
+        <input class="input" id="lockPass" placeholder="Enter password to lock (min 4 chars)" type="password" />
+      </div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+        <button class="btn primary" id="confirmLock">Yes, Lock it</button>
+        <button class="btn" id="skipLock">No, skip</button>
+      </div>
+    </div>
+  </div>
 
-      if (!dd || !btn) return;
+  <!-- Vault modal (locked projects) -->
+  <div class="modal-back" id="vaultModal">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800">🔒 Locked Vault</div>
+        <div class="small">Open a locked project by entering its password</div>
+      </div>
+      <div class="lock-list" id="vaultList"></div>
+      <div style="display:flex;justify-content:flex-end;margin-top:8px">
+        <button class="btn" id="closeVault">Close</button>
+      </div>
+    </div>
+  </div>
 
-      function openMenu() {
-        dd.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
+  <!-- Notes Vault modal -->
+  <div class="modal-back" id="notesModal">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+        <div>
+          <div style="font-weight:800">📝 Encrypted Notes Vault</div>
+          <div class="small">AES-GCM + PBKDF2 • plaintext never saved • Option B export</div>
+        </div>
+        <div class="row" style="justify-content:flex-end;flex-wrap:wrap">
+          <span class="pill">Status: <b id="noteStatus">Locked</b></span>
+          <button class="btn" id="closeNotes">Close</button>
+        </div>
+      </div>
+
+      <div style="margin-top:12px" class="notice">
+        Notes are stored encrypted in localStorage. When unlocked, plaintext exists only in memory until you lock/close/auto-lock.
+      </div>
+
+      <div style="margin-top:12px" class="form-row">
+        <input class="input" id="notePassInput" type="password" placeholder="Passphrase (used to encrypt/decrypt this note)" />
+      </div>
+      <textarea id="noteTextInput" placeholder="Paste your note here..."></textarea>
+
+      <div class="row" style="justify-content:flex-end;margin-top:10px">
+        <button class="btn primary" id="createNoteBtn">Encrypt & Save Note</button>
+        <button class="btn" id="lockNotesBtn">Lock Notes</button>
+        <button class="btn" id="backupNotesBtn">Download Notes JSON</button>
+      </div>
+
+      <div style="margin-top:12px" class="small">Stored Notes</div>
+      <div id="notesList" class="note-grid"></div>
+
+      <div id="noteViewer" style="margin-top:14px;display:none;">
+        <div class="small" id="noteMeta"></div>
+        <div class="note-view" id="notePlain"></div>
+        <div class="row" style="justify-content:flex-end;margin-top:10px;flex-wrap:wrap">
+          <button class="btn primary" id="exportNoteHtmlBtn">Download Encrypted HTML (Option B)</button>
+          <button class="btn" id="relockNoteBtn">Relock Now</button>
+        </div>
+        <small class="hint">Auto-lock after 60s of inactivity while unlocked.</small>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* =========================================================
+   PROJECT VAULT (your original app, completed + cleaned)
+   ========================================================= */
+
+/* Storage structure:
+projects: JSON object keyed by id {
+ id: {id, title, imageData(base64), html, created, locked:bool, cipher/base64, salt/base64, iv/base64}
+}
+*/
+const DB_KEY = 'bytstar_projects_v1';
+
+function uid(){ return 'p_'+Math.random().toString(36).slice(2,10) }
+function now(){ return Date.now() }
+
+function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)) }
+function loadDB(){ try{ return JSON.parse(localStorage.getItem(DB_KEY)||'{}') }catch(e){return {}} }
+let db = loadDB();
+
+const main = document.getElementById('main');
+const newBtn = document.getElementById('newBtn');
+const editorModal = document.getElementById('editorModal');
+const lockModal = document.getElementById('lockModal');
+const vaultModal = document.getElementById('vaultModal');
+const notesModal = document.getElementById('notesModal');
+
+const projTitle = document.getElementById('projTitle');
+const htmlEditor = document.getElementById('htmlEditor');
+const coverInput = document.getElementById('coverInput');
+const saveBtn = document.getElementById('saveBtn');
+const cancelSave = document.getElementById('cancelSave');
+const confirmLock = document.getElementById('confirmLock');
+const skipLock = document.getElementById('skipLock');
+const lockPass = document.getElementById('lockPass');
+const vaultBtn = document.getElementById('vaultBtn');
+const vaultList = document.getElementById('vaultList');
+const importBtn = document.getElementById('importBtn');
+const exportBtn = document.getElementById('exportBtn');
+const clearBtn = document.getElementById('clearBtn');
+const previewBtn = document.getElementById('previewBtn');
+const closeVault = document.getElementById('closeVault');
+
+const notesBtn = document.getElementById('notesBtn');
+const closeNotes = document.getElementById('closeNotes');
+
+let editingId = null;
+let stagedImageData = null; // base64 3000x3000
+
+function openModal(mod){ mod.style.display='flex' }
+function closeModal(mod){ mod.style.display='none' }
+
+function render(){
+  main.innerHTML='';
+  const keys = Object.keys(db).sort((a,b)=>(db[b]?.created||0)-(db[a]?.created||0));
+  if(keys.length===0){
+    const el = document.createElement('div');
+    el.className='card'; el.style.padding='40px';
+    el.innerHTML='<div style="text-align:center"><strong>No projects yet</strong><div class="small" style="margin-top:6px">Click + to create your first HTML project</div></div>';
+    main.appendChild(el); return;
+  }
+  keys.forEach(k=>{
+    const p = db[k];
+    const card = document.createElement('div'); card.className='card';
+    const cover = document.createElement('img'); cover.className='cover';
+    cover.src = p.imageData || placeholderData();
+    cover.title = p.title;
+    card.appendChild(cover);
+    if(p.locked) {
+      const lb = document.createElement('div'); lb.className='lock-badge'; lb.textContent='LOCKED';
+      card.appendChild(lb);
+    }
+    const meta = document.createElement('div'); meta.className='card-meta';
+    const t = document.createElement('div'); t.className='p-title'; t.textContent=p.title || 'Untitled Project';
+    meta.appendChild(t);
+
+    const actions = document.createElement('div'); actions.className='actions';
+    const run = document.createElement('button'); run.className='btn primary'; run.textContent='☄️OPEN-VIEW';
+    run.onclick = ()=>runProject(k);
+    const edit = document.createElement('button'); edit.className='btn'; edit.textContent='EDIT⌨️';
+    edit.onclick = ()=>editProject(k);
+    const dl = document.createElement('button'); dl.className='btn'; dl.textContent='📲 Ædownload';
+    dl.onclick = ()=>shareProject(k);
+    const del = document.createElement('button'); del.className='btn danger'; del.textContent='DELETE 🚮';
+    del.onclick = ()=>{ if(confirm('Delete this project?')){ delete db[k]; saveDB(db); render(); } };
+    actions.append(run, edit, dl, del);
+    meta.appendChild(actions);
+    card.appendChild(meta);
+    main.appendChild(card);
+  });
+}
+
+function placeholderData(){
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='100%' height='100%' fill='#071218'/><text x='50%' y='50%' fill='#2dafff' font-size='18' text-anchor='middle' dominant-baseline='middle'>ByteStAR</text></svg>`;
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+}
+
+/* Image processing: scale to square 3000x3000 */
+function fileTo3000(file){
+  return new Promise((res,rej)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = e=>{
+      img.onload = ()=>{
+        try{
+          const size = 3000;
+          const canvas = document.createElement('canvas');
+          canvas.width = size; canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          const ratio = Math.max(size/img.width, size/img.height);
+          const w = img.width*ratio, h = img.height*ratio;
+          const dx = (size-w)/2, dy=(size-h)/2;
+          ctx.fillStyle='#071218'; ctx.fillRect(0,0,size,size);
+          ctx.drawImage(img, dx, dy, w, h);
+          const out = canvas.toDataURL('image/jpeg',0.92);
+          res(out);
+        }catch(err){ rej(err) }
+      };
+      img.onerror = ()=>rej(new Error('Invalid image'));
+      img.src = e.target.result;
+    };
+    reader.onerror = ()=>rej(new Error('File read error'));
+    reader.readAsDataURL(file);
+  });
+}
+
+/* --- Crypto helpers using Web Crypto (AES-GCM + PBKDF2) --- */
+async function deriveKey(password, salt, iterations=250000){
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({
+    name:'PBKDF2', salt: salt, iterations: iterations, hash: 'SHA-256'
+  }, baseKey, { name:'AES-GCM', length:256 }, false, ['encrypt','decrypt']);
+}
+function randBytes(len){ const b=new Uint8Array(len); crypto.getRandomValues(b); return b }
+function toB64(buf){ return btoa(String.fromCharCode(...new Uint8Array(buf))) }
+function fromB64(b64){ const s=atob(b64); const a=new Uint8Array(s.length); for(let i=0;i<s.length;i++)a[i]=s.charCodeAt(i); return a.buffer }
+
+/* Encrypt plaintext (string) with password -> returns {cipher, salt, iv} base64 */
+async function encryptWithPassword(plaintext, password){
+  const salt = randBytes(16);
+  const iv = randBytes(12);
+  const key = await deriveKey(password, salt);
+  const enc = new TextEncoder();
+  const ct = await crypto.subtle.encrypt({name:'AES-GCM', iv: iv}, key, enc.encode(plaintext));
+  return { cipher: toB64(ct), salt: toB64(salt), iv: toB64(iv) };
+}
+async function decryptWithPassword(cipherB64, password, saltB64, ivB64){
+  const salt = fromB64(saltB64);
+  const iv = fromB64(ivB64);
+  const key = await deriveKey(password, salt);
+  const ptBuf = await crypto.subtle.decrypt({name:'AES-GCM', iv: new Uint8Array(iv)}, key, fromB64(cipherB64));
+  return new TextDecoder().decode(ptBuf);
+}
+
+/* Save flow */
+saveBtn.addEventListener('click', async ()=>{
+  const title = projTitle.value || 'Untitled Project';
+  const html = htmlEditor.value || '<!-- empty -->';
+  const id = editingId || uid();
+  let imageData = stagedImageData || placeholderData();
+  const obj = { id, title, imageData, created: now(), locked:false, html };
+  openModal(lockModal);
+  window._pendingSave = obj;
+});
+
+confirmLock.addEventListener('click', async ()=>{
+  const password = lockPass.value;
+  if(!password || password.length<4){ alert('Password too short (min 4 chars)'); return; }
+  const obj = window._pendingSave;
+  const payload = JSON.stringify({ title: obj.title, html: obj.html, created: obj.created });
+  const enc = await encryptWithPassword(payload, password);
+  obj.locked = true;
+  obj.cipher = enc.cipher; obj.salt = enc.salt; obj.iv = enc.iv;
+  delete obj.html;
+  db[obj.id] = obj; saveDB(db); window._pendingSave = null;
+  lockPass.value=''; closeModal(lockModal); closeModal(editorModal); render();
+});
+skipLock.addEventListener('click', ()=>{
+  const obj = window._pendingSave;
+  obj.locked = false;
+  db[obj.id] = obj; saveDB(db); window._pendingSave=null;
+  closeModal(lockModal); closeModal(editorModal); render();
+});
+
+/* Cover input */
+coverInput.addEventListener('change', async (e)=>{
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  try{
+    stagedImageData = await fileTo3000(f);
+    alert('Cover processed and staged (3000x3000).');
+  }catch(err){ alert('Image processing failed: '+err.message) }
+});
+
+/* New project */
+newBtn.addEventListener('click', ()=>{
+  editingId=null; projTitle.value=''; htmlEditor.value=''; stagedImageData=null;
+  openModal(editorModal);
+});
+
+/* Cancel editor */
+document.getElementById('cancelEdit').addEventListener('click', ()=>closeModal(editorModal));
+cancelSave.addEventListener('click', ()=>closeModal(editorModal));
+
+/* Preview */
+previewBtn.addEventListener('click', ()=>{
+  const html = htmlEditor.value || '<!-- empty -->';
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  window.open(url, '_blank');
+});
+
+/* Locked vault modal */
+vaultBtn.addEventListener('click', ()=>{ openModal(vaultModal); populateVault(); });
+closeVault.addEventListener('click', ()=>closeModal(vaultModal));
+
+function populateVault(){
+  vaultList.innerHTML='';
+  const keys = Object.keys(db).filter(k=>db[k].locked).sort((a,b)=>(db[b]?.created||0)-(db[a]?.created||0));
+  if(keys.length===0){ vaultList.innerHTML='<div class="notice">No locked projects.</div>'; return; }
+  keys.forEach(k=>{
+    const p = db[k];
+    const row = document.createElement('div'); row.className='row';
+    const thumb = document.createElement('img'); thumb.className='thumbnail'; thumb.src=p.imageData||placeholderData();
+    const info = document.createElement('div'); info.style.flex='1';
+    info.innerHTML = `<div style="font-weight:700">${p.title||'Locked'}</div><div class="small">ID: ${p.id}</div>`;
+    const openBtn = document.createElement('button'); openBtn.className='btn'; openBtn.textContent='Open';
+    openBtn.onclick = ()=>unlockAndOpen(k);
+    row.append(thumb, info, openBtn);
+    vaultList.appendChild(row);
+  });
+}
+
+/* Unlock flow for vault items */
+async function unlockAndOpen(id){
+  const pass = prompt('Enter password to open this project:');
+  if(!pass) return;
+  const p = db[id];
+  try{
+    const dec = await decryptWithPassword(p.cipher, pass, p.salt, p.iv);
+    const obj = JSON.parse(dec);
+    const go = confirm('Password OK. Open for Edit? (Cancel to Run)');
+    if(go){
+      editingId = id;
+      projTitle.value = obj.title || '';
+      htmlEditor.value = obj.html || '';
+      stagedImageData = p.imageData || null;
+      closeModal(vaultModal); openModal(editorModal);
+    }else{
+      const blob = new Blob([obj.html], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }
+  }catch(e){
+    alert('Password incorrect or decryption failed.');
+  }
+}
+
+/* Edit project (including locked) */
+async function editProject(id){
+  const p = db[id];
+
+  if(p.locked){
+    const pass = prompt('This project is locked. Enter password to edit:');
+    if(!pass) return;
+    try{
+      const decStr = await decryptWithPassword(p.cipher, pass, p.salt, p.iv);
+      const obj = JSON.parse(decStr);
+
+      editingId = id;
+      projTitle.value = obj.title || '';
+      htmlEditor.value = obj.html || '';
+      stagedImageData = p.imageData || null;
+
+      openModal(editorModal);
+    }catch(e){
+      alert('Password incorrect or decryption failed.');
+    }
+  } else {
+    editingId = id;
+    projTitle.value = p.title || '';
+    htmlEditor.value = p.html || '';
+    stagedImageData = p.imageData || null;
+
+    openModal(editorModal);
+  }
+}
+
+/* Run project (if locked ask for password) */
+async function runProject(id){
+  const p = db[id];
+
+  if(p.locked){
+    const pass = prompt('Enter password to run this locked project:');
+    if(!pass) return;
+    try{
+      const decStr = await decryptWithPassword(p.cipher, pass, p.salt, p.iv);
+      const obj = JSON.parse(decStr);
+
+      const blob = new Blob([obj.html || ''], {type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }catch(e){
+      alert('Password incorrect or decryption failed.');
+    }
+  }else{
+    const blob = new Blob([p.html || ''], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+}
+
+/* Download / Share project (exports as .html).
+   - If unlocked project: exports plaintext HTML.
+   - If locked project: exports a self-contained "Encrypted Project" HTML that asks password to decrypt locally.
+*/
+async function shareProject(id){
+  const p = db[id];
+
+  // helper: download
+  function downloadText(filename, text, mime='text/html'){
+    const blob = new Blob([text], {type: mime});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    a.click();
+  }
+
+  const safeName = (p.title || 'project')
+    .replace(/[^\w\-]+/g,'-')
+    .replace(/\-+/g,'-')
+    .replace(/^\-|\-$/g,'')
+    .slice(0,48) || 'project';
+
+  const ts = new Date().toISOString().replace(/:/g,'-').replace('T','_').split('.')[0];
+
+  // If not locked: export raw html
+  if(!p.locked){
+    const html = p.html || '<!-- empty -->';
+    downloadText(`${safeName}-${ts}.html`, html, 'text/html');
+    return;
+  }
+
+  // If locked: export encrypted wrapper HTML
+  const exported = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Encrypted Project • ${safeName}</title>
+<style>
+:root{
+  --bg:#0b0f14; --card:#0f1720; --muted:#9aa6b2;
+  --accent1:#00d4ff; --accent2:#6a00ff; --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Inter,Segoe UI,system-ui,Arial;background:linear-gradient(180deg,#05060a 0%, #08111a 100%);color:#e6eef6}
+.header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px);display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:8px;background:linear-gradient(135deg,var(--accent1),var(--accent2));display:flex;align-items:center;justify-content:center;color:#03121b;font-weight:800;font-family:monospace}
+.container{max-width:900px;margin:22px auto;padding:0 16px 60px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:14px;overflow:hidden;box-shadow:0 10px 45px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03);padding:16px}
+.notice{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;color:var(--muted);font-size:13px;line-height:1.45}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:inherit;font-size:14px}
+.btn{padding:10px 12px;border-radius:10px;border:none;background:rgba(255,255,255,0.03);color:#cbd5e1;cursor:pointer;font-weight:800}
+.btn.primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#02111a}
+.small{font-size:12px;color:var(--muted)}
+.cover{width:100%;max-height:280px;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,0.03);margin-top:12px}
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <div class="logo">A2B</div>
+      <div>
+        <div style="font-weight:800">🔒 Encrypted Project</div>
+        <div class="small">${safeName}</div>
+      </div>
+    </div>
+    <div class="small">Decrypt locally • nothing saved</div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <div class="notice">
+        This file contains encrypted content only. Enter the password to decrypt and open the HTML locally.
+      </div>
+
+      <img class="cover" alt="Cover" src="${p.imageData || ''}" />
+
+      <div class="row">
+        <input id="pw" class="input" type="password" placeholder="Password" />
+        <button id="openBtn" class="btn primary">Unlock & Open</button>
+      </div>
+      <div id="msg" class="small" style="margin-top:10px"></div>
+    </div>
+  </div>
+
+<script>
+const PAYLOAD = ${JSON.stringify({cipher:p.cipher, salt:p.salt, iv:p.iv})};
+
+const enc = new TextEncoder();
+const dec = new TextDecoder();
+
+function fromB64(b64){
+  const s = atob(b64);
+  const a = new Uint8Array(s.length);
+  for(let i=0;i<s.length;i++) a[i]=s.charCodeAt(i);
+  return a.buffer;
+}
+
+async function deriveKey(password, saltBuf, iterations=250000){
+  const baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({
+    name:'PBKDF2', salt: new Uint8Array(saltBuf), iterations, hash:'SHA-256'
+  }, baseKey, {name:'AES-GCM', length:256}, false, ['decrypt']);
+}
+
+async function decryptWithPassword(cipherB64, password, saltB64, ivB64){
+  const saltBuf = fromB64(saltB64);
+  const ivBuf = fromB64(ivB64);
+  const key = await deriveKey(password, saltBuf);
+  const ptBuf = await crypto.subtle.decrypt({name:'AES-GCM', iv: new Uint8Array(ivBuf)}, key, fromB64(cipherB64));
+  return dec.decode(ptBuf);
+}
+
+document.getElementById('openBtn').addEventListener('click', async ()=>{
+  const pw = document.getElementById('pw').value;
+  if(!pw) return;
+  const msg = document.getElementById('msg');
+  msg.textContent = 'Decrypting...';
+
+  try{
+    const decStr = await decryptWithPassword(PAYLOAD.cipher, pw, PAYLOAD.salt, PAYLOAD.iv);
+    const obj = JSON.parse(decStr);
+    const blob = new Blob([obj.html || ''], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    msg.textContent = 'Unlocked (not saved). Opening...';
+    window.open(url, '_blank');
+  }catch(e){
+    msg.textContent = 'Wrong password (or corrupted data).';
+  }
+});
+<\/script>
+</body>
+</html>`;
+
+  downloadText(`${safeName}-LOCKED-${ts}.html`, exported, 'text/html');
+}
+
+/* Import (HTML file -> new project)
+   - .html/.htm: imports as an unlocked project
+   - .json: attempts to import a DB export {id:{...}} or array
+*/
+importBtn.addEventListener('click', ()=>{
+  const inp = document.createElement('input');
+  inp.type = 'file';
+  inp.accept = '.html,.htm,.json';
+  inp.onchange = async (e)=>{
+    const file = e.target.files && e.target.files[0];
+    if(!file) return;
+
+    const text = await file.text();
+    const lower = file.name.toLowerCase();
+
+    // JSON import
+    if(lower.endsWith('.json')){
+      try{
+        const parsed = JSON.parse(text);
+
+        // If it's a direct db object keyed by id
+        if(parsed && typeof parsed === 'object' && !Array.isArray(parsed)){
+          // merge into db
+          for(const k of Object.keys(parsed)){
+            const p = parsed[k];
+            if(p && typeof p === 'object' && p.id){
+              db[p.id] = p;
+            }
+          }
+          saveDB(db);
+          render();
+          alert('Imported JSON into ByteStar projects.');
+          return;
+        }
+
+        // If it’s an array, try importing as notes or projects (best effort)
+        if(Array.isArray(parsed)){
+          alert('JSON array detected. This looks like a notes backup, not projects. (No import applied)');
+          return;
+        }
+
+        alert('JSON format not recognized.');
+      }catch(err){
+        alert('Invalid JSON file.');
       }
+      return;
+    }
 
-      function closeMenu() {
-        dd.classList.remove('open');
-        btn.setAttribute('aria-expanded', 'false');
-      }
+    // HTML import
+    const id = uid();
+    db[id] = {
+      id,
+      title: file.name.replace(/\.(html|htm)$/i,''),
+      imageData: placeholderData(),
+      created: now(),
+      locked: false,
+      html: text
+    };
+    saveDB(db);
+    render();
+    alert('Imported HTML as a new project.');
+  };
+  inp.click();
+});
 
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        dd.classList.contains('open') ? closeMenu() : openMenu();
-      });
+/* Clear All (dev) */
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  if(!confirm('DEV: Clear ALL projects from localStorage?')) return;
+  db = {};
+  saveDB(db);
+  render();
+});
 
-      document.addEventListener('click', closeMenu);
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeMenu();
-      });
-    })();
-  </script>
+/* Boot */
+render();/* =========================================================
+   EXPORT ALL PROJECTS (JSON)
+   ========================================================= */
+exportBtn.addEventListener('click', ()=>{
+  const ts = new Date().toISOString().replace(/:/g,"-").replace("T","_").split(".")[0];
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `bytestar-projects-${ts}.json`;
+  a.click();
+});
+
+/* =========================================================
+   NOTES VAULT (AES-GCM + PBKDF2) — matches your UI
+   ========================================================= */
+const NOTES_KEY = "secureNotes_v1";
+
+const noteStatus = document.getElementById("noteStatus");
+const notePassInput = document.getElementById("notePassInput");
+const noteTextInput = document.getElementById("noteTextInput");
+const createNoteBtn = document.getElementById("createNoteBtn");
+const lockNotesBtn = document.getElementById("lockNotesBtn");
+const backupNotesBtn = document.getElementById("backupNotesBtn");
+const notesList = document.getElementById("notesList");
+const noteViewer = document.getElementById("noteViewer");
+const noteMeta = document.getElementById("noteMeta");
+const notePlain = document.getElementById("notePlain");
+const exportNoteHtmlBtn = document.getElementById("exportNoteHtmlBtn");
+const relockNoteBtn = document.getElementById("relockNoteBtn");
+
+let unlockedNoteText = null;
+let unlockedNoteObj = null;
+let unlockedNoteIndex = null;
+let noteRelockTimer = null;
+
+function setNoteStatus(unlocked){
+  noteStatus.textContent = unlocked ? "Unlocked" : "Locked";
+}
+
+function getNotes(){
+  try{ return JSON.parse(localStorage.getItem(NOTES_KEY) || "[]"); }
+  catch(e){ return []; }
+}
+function setNotes(arr){
+  localStorage.setItem(NOTES_KEY, JSON.stringify(arr));
+}
+
+function u8ToB64(u8){
+  let s = "";
+  for(const b of u8) s += String.fromCharCode(b);
+  return btoa(s);
+}
+function b64ToU8(b64){
+  return Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+}
+
+async function noteDeriveKey(passphrase, saltU8){
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(passphrase),
+    "PBKDF2",
+    false,
+    ["deriveKey"]
+  );
+
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt: saltU8, iterations: 100000, hash:"SHA-256" },
+    keyMaterial,
+    { name:"AES-GCM", length: 256 },
+    false,
+    ["encrypt","decrypt"]
+  );
+}
+
+async function noteEncrypt(plainText, passphrase){
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv   = crypto.getRandomValues(new Uint8Array(12));
+  const key  = await noteDeriveKey(passphrase, salt);
+
+  const cipherBuf = await crypto.subtle.encrypt(
+    { name:"AES-GCM", iv },
+    key,
+    new TextEncoder().encode(plainText)
+  );
+
+  return {
+    cipher: u8ToB64(new Uint8Array(cipherBuf)),
+    iv: Array.from(iv),
+    salt: Array.from(salt),
+    created: Date.now()
+  };
+}
+
+async function noteDecrypt(noteObj, passphrase){
+  const salt = new Uint8Array(noteObj.salt);
+  const iv   = new Uint8Array(noteObj.iv);
+  const key  = await noteDeriveKey(passphrase, salt);
+
+  const plainBuf = await crypto.subtle.decrypt(
+    { name:"AES-GCM", iv },
+    key,
+    b64ToU8(noteObj.cipher)
+  );
+
+  return new TextDecoder().decode(plainBuf);
+}
+
+function renderNotes(){
+  const notes = getNotes();
+  notesList.innerHTML = "";
+
+  if(!notes.length){
+    notesList.innerHTML = `<div class="notice">No notes yet.</div>`;
+    return;
+  }
+
+  notes
+    .map((n, idx)=>({n, idx}))
+    .sort((a,b)=>(b.n.created||0)-(a.n.created||0))
+    .forEach(({n, idx})=>{
+      const dt = new Date(n.created || Date.now());
+      const row = document.createElement("div");
+      row.className = "note-item";
+      row.innerHTML = `
+        <div>
+          <div style="font-weight:800">Encrypted Note ${idx+1}</div>
+          <small>${dt.toLocaleString()}</small>
+        </div>
+        <div class="row" style="justify-content:flex-end;flex-wrap:wrap">
+          <button class="btn primary" data-open="${idx}">Open</button>
+          <button class="btn danger" data-del="${idx}">Delete</button>
+        </div>
+      `;
+      notesList.appendChild(row);
+    });
+
+  // bind buttons
+  notesList.querySelectorAll("[data-open]").forEach(btn=>{
+    btn.addEventListener("click", ()=>openNote(parseInt(btn.getAttribute("data-open"),10)));
+  });
+  notesList.querySelectorAll("[data-del]").forEach(btn=>{
+    btn.addEventListener("click", ()=>deleteNote(parseInt(btn.getAttribute("data-del"),10)));
+  });
+}
+
+function lockNotes(){
+  unlockedNoteText = null;
+  unlockedNoteObj = null;
+  unlockedNoteIndex = null;
+
+  noteViewer.style.display = "none";
+  noteMeta.textContent = "";
+  notePlain.textContent = "";
+
+  clearTimeout(noteRelockTimer);
+  setNoteStatus(false);
+}
+
+function resetNoteRelock(){
+  clearTimeout(noteRelockTimer);
+  noteRelockTimer = setTimeout(()=>{
+    lockNotes();
+    alert("Notes auto-locked for safety.");
+  }, 60000);
+}
+
+// reset timer on activity if unlocked
+["click","keydown","mousemove","touchstart"].forEach(evt=>{
+  window.addEventListener(evt, ()=>{
+    if(unlockedNoteText !== null) resetNoteRelock();
+  }, {passive:true});
+});
+
+async function createEncryptedNote(){
+  const pass = notePassInput.value;
+  const text = noteTextInput.value;
+
+  if(!text.trim()) return alert("Paste a note first.");
+  if(!pass) return alert("Passphrase required.");
+
+  const encrypted = await noteEncrypt(text, pass);
+  const notes = getNotes();
+  notes.push(encrypted);
+  setNotes(notes);
+
+  noteTextInput.value = "";
+  renderNotes();
+  alert("Encrypted note saved.");
+}
+
+async function openNote(index){
+  const notes = getNotes();
+  const noteObj = notes[index];
+  if(!noteObj) return;
+
+  const pass = prompt("Enter passphrase to decrypt this note:");
+  if(!pass) return;
+
+  try{
+    const plain = await noteDecrypt(noteObj, pass);
+
+    unlockedNoteText = plain;
+    unlockedNoteObj = noteObj;
+    unlockedNoteIndex = index;
+
+    const dt = new Date(noteObj.created || Date.now());
+    noteMeta.textContent = `Viewing note ${index+1} • created ${dt.toLocaleString()} • locked at rest`;
+    notePlain.textContent = plain;
+    noteViewer.style.display = "block";
+
+    setNoteStatus(true);
+    resetNoteRelock();
+  }catch(e){
+    alert("Wrong passphrase (or corrupted note).");
+  }
+}
+
+function deleteNote(index){
+  if(!confirm("Delete this note permanently?")) return;
+  const notes = getNotes();
+  notes.splice(index, 1);
+  setNotes(notes);
+  lockNotes();
+  renderNotes();
+}
+
+function downloadNotesJSON(){
+  const notes = getNotes();
+  const ts = new Date().toISOString().replace(/:/g,"-").replace("T","_").split(".")[0];
+  const blob = new Blob([JSON.stringify(notes)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `encrypted-notes-${ts}.json`;
+  a.click();
+}
+
+/* Option B: Encrypted HTML export for CURRENTLY OPEN note only */
+function downloadEncryptedNoteHTML(){
+  if(!unlockedNoteObj) return alert("Open a note first.");
+
+  const noteObj = unlockedNoteObj;
+
+  const exportedHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encrypted Note</title>
+<style>
+  :root{
+    --bg:#0b0f14; --card:#0f1720; --muted:#9aa6b2;
+    --accent1:#00d4ff; --accent2:#6a00ff;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(180deg,#05060a 0%, #08111a 100%);color:#e6eef6;font-family:Inter,Segoe UI,system-ui,Arial;}
+  .header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center}
+  .wrap{max-width:900px;margin:22px auto;padding:0 16px 60px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.05);border-radius:14px;padding:16px;box-shadow:0 18px 60px rgba(0,0,0,.65)}
+  .notice{background:rgba(255,255,255,0.02);padding:10px;border-radius:10px;color:var(--muted);font-size:13px;line-height:1.45}
+  input{width:100%;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.02);color:inherit;margin-top:12px}
+  button{margin-top:10px;padding:10px 12px;border-radius:10px;border:none;font-weight:900;cursor:pointer;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#02111a}
+  #out{white-space:pre-wrap;word-break:break-word;line-height:1.7;margin-top:14px}
+  .small{font-size:12px;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+  <div class="header"><strong>🔒 Encrypted Note</strong><span class="small">Decrypt locally</span></div>
+  <div class="wrap">
+    <div class="card">
+      <div class="notice">This file contains encrypted content only. Enter the passphrase to decrypt locally.</div>
+      <input id="pw" type="password" placeholder="Passphrase" />
+      <button id="btn">Unlock</button>
+      <div id="msg" class="small"></div>
+      <div id="out"></div>
+    </div>
+  </div>
+
+<script>
+const NOTE = ${JSON.stringify(noteObj)};
+const enc = new TextEncoder();
+const dec = new TextDecoder();
+
+function b64ToU8(b64){ return Uint8Array.from(atob(b64), c => c.charCodeAt(0)); }
+
+async function deriveKey(password, salt){
+  const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", salt, iterations: 100000, hash:"SHA-256" },
+    keyMaterial,
+    { name:"AES-GCM", length: 256 },
+    false,
+    ["decrypt"]
+  );
+}
+
+async function decryptNote(password){
+  const salt = new Uint8Array(NOTE.salt);
+  const iv   = new Uint8Array(NOTE.iv);
+  const key  = await deriveKey(password, salt);
+  const plainBuf = await crypto.subtle.decrypt({ name:"AES-GCM", iv }, key, b64ToU8(NOTE.cipher));
+  return dec.decode(plainBuf);
+}
+
+document.getElementById("btn").addEventListener("click", async ()=>{
+  const pw = document.getElementById("pw").value;
+  if(!pw) return;
+  const msg = document.getElementById("msg");
+  const out = document.getElementById("out");
+
+  msg.textContent = "Decrypting...";
+  out.textContent = "";
+
+  try{
+    const text = await decryptNote(pw);
+    msg.textContent = "Unlocked (not saved).";
+    out.textContent = text;
+  }catch(e){
+    msg.textContent = "Wrong passphrase (or corrupted data).";
+  }
+});
+<\/script>
+</body>
+</html>`;
+
+  const ts = new Date().toISOString().replace(/:/g,"-").replace("T","_").split(".")[0];
+  const blob = new Blob([exportedHTML], {type:"text/html"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `note-${ts}.html`;
+  a.click();
+}
+
+/* Notes modal wiring */
+notesBtn.addEventListener("click", ()=>{
+  openModal(notesModal);
+  renderNotes();
+  lockNotes(); // start locked view every time modal opens
+});
+
+closeNotes.addEventListener("click", ()=>{
+  lockNotes();
+  closeModal(notesModal);
+});
+
+createNoteBtn.addEventListener("click", createEncryptedNote);
+lockNotesBtn.addEventListener("click", lockNotes);
+backupNotesBtn.addEventListener("click", downloadNotesJSON);
+exportNoteHtmlBtn.addEventListener("click", downloadEncryptedNoteHTML);
+relockNoteBtn.addEventListener("click", lockNotes);
+
+/* Initial render */
+renderNotes();
+
+/* =========================================================
+   CLOSE OUT FILE
+   ========================================================= */
+</script>
 </body>
 </html>
