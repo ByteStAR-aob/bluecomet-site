@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Comet Work | Hub</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0a;
+            --card-bg: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-color: #4a90e2;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .hub-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            background: #222;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: #333;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #444;
+        }
+
+        .card h2 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 600px) {
+            .hub-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Blue Comet ☄️ Work</h1>
+    </header>
+
+    <main class="hub-container">
+        <a href="#" class="card">
+            <div class="card-icon">B</div>
+            <h2>BlueComet.Work</h2>
+            <p>The central hub for all development projects and digital builds.</p>
+        </a>
+
+        <a href="#" class="card">
+            <div class="card-icon">M</div>
+            <h2>Material Master</h2>
+            <p>Foreman Edition: Streamlined logistics and material tracking for construction pros.</p>
+        </a>
+
+        <a href="#" class="card">
+            <div class="card-icon">D</div>
+            <h2>MC-Daylight Packets</h2>
+            <p>Automated data packet management for daylighting systems.</p>
+        </a>
+
+        <a href="#" class="card">
+            <div class="card-icon">P</div>
+            <h2>Ai-TONE</h2>
+            <p>Advanced audio synthesis and tone generation powered by AI.</p>
+        </a>
+
+        <a href="#" class="card">
+            <div class="card-icon">W</div>
+            <h2>World Words Hub</h2>
+            <p>A pattern-based linguistic tool for discovering global language trends.</p>
+        </a>
+    </main>
+
+</body>
+</html>
