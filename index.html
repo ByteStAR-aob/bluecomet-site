@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Landing Page | BlueComet Work Network</title>
-<meta name="description" content="BlueComet Work Network - portals to ByteStar, CROW, and AiiTONE.">
+<meta name="description" content="BlueComet Work Network - portals to About, ByteStar, CROW, SLANG, AZ2ii, and AiiTONE.">
 <link rel="icon" href="data:,">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@900&display=swap" rel="stylesheet">
 <style>
@@ -16,8 +16,14 @@
     --bytestar-accent: #00aaff;
     --crow-primary: #a17fff;
     --crow-secondary: #5ac8fa;
-    --aiitone-color: #00f2ff; /* Cyber Cyan */
-    --aiitone-accent: #7000ff; /* Electric Purple */
+    --slang-primary: #ff5fd2;
+    --slang-secondary: #7c7cff;
+    --slang-accent: #49f2ff;
+    --az2ii-primary: #a020f0;
+    --az2ii-secondary: #6b1bb8;
+    --az2ii-accent: #d18bff;
+    --aiitone-color: #00f2ff;
+    --aiitone-accent: #7000ff;
 }
 
 body {
@@ -29,6 +35,14 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 h1.welcome {
@@ -50,6 +64,11 @@ h1.welcome {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+    transform: translateY(-2px);
 }
 
 .glow-ring {
@@ -112,26 +131,41 @@ h1.welcome {
     50% { transform: translate(-50%, -50%) scale(1.4); opacity: 0.35; }
 }
 
-@keyframes shimmer { to { background-position: 300% center; } }
+@keyframes shimmer {
+    to { background-position: 300% center; }
+}
 
 @keyframes starTrail {
-    0% { transform: translate(var(--x-start), var(--y-start)) scale(0); opacity: 1; }
-    100% { transform: translate(var(--x-end), var(--y-end)) scale(0.5); opacity: 0; }
+    0% {
+        transform: translate(var(--x-start), var(--y-start)) scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x-end), var(--y-end)) scale(0.5);
+        opacity: 0;
+    }
 }
 
 .logo-container:hover .glow-ring {
     opacity: 0.45;
     filter: blur(70px);
 }
+
 .logo-container:hover .text-logo span {
     animation-duration: 3s;
 }
 
 .aiitone-motion {
     margin-top: 50px;
+    margin-bottom: 40px;
     position: relative;
     text-align: center;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.aiitone-motion:hover {
+    transform: translateY(-2px);
 }
 
 .aiitone-motion .glow-ring {
@@ -145,7 +179,7 @@ h1.welcome {
 
 .aiitone-motion .text-logo {
     font-family: 'Inter', sans-serif;
-    font-size: 5rem;
+    font-size: clamp(3rem, 8vw, 5rem);
     letter-spacing: -2px;
     color: #fff;
 }
@@ -169,7 +203,7 @@ h1.welcome {
 <h1 class="welcome">Welcome to</h1>
 
 <!-- BlueCometWork -->
-<a href="https://about.bluecomet.work" target="_blank">
+<a href="https://about.bluecomet.work" target="_blank" rel="noopener noreferrer">
 <div class="logo-container" id="bluecomet">
     <div class="glow-ring" style="width:100%; height:100%; background: radial-gradient(circle, var(--bluecomet-color) 0%, transparent 70%);"></div>
     <h1 class="text-logo">
@@ -181,7 +215,7 @@ h1.welcome {
 </a>
 
 <!-- ByteStar -->
-<a href="https://bytestar.bluecomet.work" target="_blank">
+<a href="https://bytestar.bluecomet.work" target="_blank" rel="noopener noreferrer">
 <div class="logo-container" id="bytestar">
     <div class="glow-ring" style="width:100%; height:100%; background: radial-gradient(circle, var(--bytestar-color) 0%, transparent 70%);"></div>
     <h1 class="text-logo">
@@ -193,7 +227,7 @@ h1.welcome {
 </a>
 
 <!-- CROW -->
-<a href="https://crow.bluecomet.work" target="_blank">
+<a href="https://crow.bluecomet.work" target="_blank" rel="noopener noreferrer">
 <div class="logo-container" id="crow">
     <div class="glow-ring" style="width:100%; height:100%; background: radial-gradient(circle, var(--crow-primary) 0%, transparent 70%);"></div>
     <h1 class="text-logo">
@@ -204,8 +238,32 @@ h1.welcome {
 </div>
 </a>
 
+<!-- SLANG -->
+<a href="https://slang.bluecomet.work" target="_blank" rel="noopener noreferrer">
+<div class="logo-container" id="slang">
+    <div class="glow-ring" style="width:100%; height:100%; background: radial-gradient(circle, var(--slang-primary) 0%, transparent 70%);"></div>
+    <h1 class="text-logo">
+        <span style="background: linear-gradient(90deg, #fff, var(--slang-primary), var(--slang-secondary), var(--slang-accent), #fff); background-size:300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite;">SLANG</span>
+        <div class="subtitle">Stickers • Logos • Alphabet • Numbers • Glyphs</div>
+    </h1>
+    <div class="particles"></div>
+</div>
+</a>
+
+<!-- AZ2ii -->
+<a href="https://az2ii.aiitone.net" target="_blank" rel="noopener noreferrer">
+<div class="logo-container" id="az2ii">
+    <div class="glow-ring" style="width:100%; height:100%; background: radial-gradient(circle, var(--az2ii-primary) 0%, transparent 70%);"></div>
+    <h1 class="text-logo">
+        <span style="background: linear-gradient(90deg, #fff, var(--az2ii-primary), var(--az2ii-accent), #fff); background-size:300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite;">AZ2ii ☔</span>
+        <div class="subtitle">Purple Rain Protocol</div>
+    </h1>
+    <div class="particles"></div>
+</div>
+</a>
+
 <!-- AiiTONE.NET Motion Logo -->
-<a href="https://aiitone.net" target="_blank">
+<a href="https://aiitone.net" target="_blank" rel="noopener noreferrer">
 <div class="aiitone-motion">
     <div class="glow-ring"></div>
     <h1 class="text-logo">
@@ -216,27 +274,37 @@ h1.welcome {
 
 <script>
 // Particle creation
-function initParticles(containerId) {
+function initParticles(containerId, color) {
     const particleContainer = document.querySelector(`#${containerId} .particles`);
+    if (!particleContainer) return;
+
     const numParticles = 25;
-    for(let i=0;i<numParticles;i++){
+    for (let i = 0; i < numParticles; i++) {
         const p = document.createElement('div');
         p.classList.add('particle');
-        const startX = Math.random()*100 + '%';
-        const startY = Math.random()*100 + '%';
-        const endX = (parseInt(startX)+(Math.random()*50-25))+'%';
-        const endY = (parseInt(startY)+(Math.random()*50-25))+'%';
+
+        const startX = Math.random() * 100 + '%';
+        const startY = Math.random() * 100 + '%';
+        const endX = (parseFloat(startX) + (Math.random() * 50 - 25)) + '%';
+        const endY = (parseFloat(startY) + (Math.random() * 50 - 25)) + '%';
+
         p.style.setProperty('--x-start', startX);
         p.style.setProperty('--y-start', startY);
         p.style.setProperty('--x-end', endX);
         p.style.setProperty('--y-end', endY);
-        p.style.animationDelay = Math.random()*2+'s';
-        p.style.animationDuration = (1+Math.random()*1.5)+'s';
+        p.style.animationDelay = Math.random() * 2 + 's';
+        p.style.animationDuration = (1 + Math.random() * 1.5) + 's';
+        p.style.background = color;
+
         particleContainer.appendChild(p);
     }
 }
 
-['bluecomet','bytestar','crow'].forEach(id => initParticles(id));
+initParticles('bluecomet', 'rgba(0, 242, 255, 0.9)');
+initParticles('bytestar', 'rgba(0, 212, 255, 0.9)');
+initParticles('crow', 'rgba(161, 127, 255, 0.9)');
+initParticles('slang', 'rgba(255, 95, 210, 0.9)');
+initParticles('az2ii', 'rgba(160, 32, 240, 0.9)');
 </script>
 
 </body>
