@@ -9,6 +9,17 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@900&display=swap" rel="stylesheet">
 
+    <!-- ⭐ PWA Manifest + Theme Color -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#00f2ff">
+
+    <!-- ⭐ Service Worker Registration -->
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js");
+    }
+    </script>
+
     <style>
         :root {
             --bg-color: #050505;
@@ -142,7 +153,7 @@
         <div class="accent-bar"></div>
     </a>
 
-    <!-- McDaylight (NEW) -->
+    <!-- McDaylight -->
     <a href="https://mcdaylight.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="mcdaylight">
         <div class="logo-container">
             <h1 class="text-logo" style="background: linear-gradient(90deg, #00f2ff, #7c7cff, #49f2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
