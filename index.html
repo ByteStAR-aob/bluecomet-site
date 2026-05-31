@@ -4,31 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlueComet Work Network</title>
-    <meta name="description" content="Portals to BlueCometWork, ByteStar, CROW, SLANG, AZ2ii, McDaylight, and AiiTONE.">
+    <meta name="description" content="Portals to BlueCometWork, ByteStar, CROW, SLANG, ABZii, AZ2ii, McDaylight, and AiiTONE.">
     <link rel="icon" href="data:,">
 
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@900&display=swap" rel="stylesheet">
 
-    <!-- ⭐ PWA Manifest + Theme Color -->
+    <!-- PWA -->
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#00f2ff">
 
-    <!-- ⭐ Service Worker Registration -->
     <script>
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js");
+        window.addEventListener("load", () => {
+            navigator.serviceWorker.register("/sw.js");
+        });
     }
     </script>
 
     <style>
         :root {
             --bg-color: #050505;
-            --bluecomet-color: #00f2ff;
-            --bytestar-color: #00d4ff;
-            --crow-primary: #a17fff;
-            --slang-primary: #ff5fd2;
-            --az2ii-primary: #a020f0;
-            --aiitone-color: #00f2ff;
         }
 
         body {
@@ -56,15 +51,26 @@
             margin: 22px 0;
             text-align: center;
             position: relative;
+
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 20px;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .section:hover {
+            border-color: rgba(0,242,255,0.3);
+            box-shadow: 0 0 30px rgba(0,242,255,0.12);
+            transform: translateY(-4px);
         }
 
         .logo-container {
             cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-container:hover {
-            transform: translateY(-4px);
         }
 
         .accent-bar {
@@ -85,45 +91,55 @@
             font-size: clamp(1rem, 2.8vw, 1.4rem);
             opacity: 0.9;
             margin-top: 6px;
-            line-height: 1.3;
         }
 
-        /* Gradient bars - matching your preview style */
+        /* ===== ACCENT COLORS ===== */
+
         #bluecomet .accent-bar {
             background: linear-gradient(90deg, #00f2ff, #0099ff);
         }
+
         #bytestar .accent-bar {
             background: linear-gradient(90deg, #00d4ff, #0088ff);
         }
-        #crow .accent-bar {
-            background: linear-gradient(90deg, #a17fff, #5ac8fa);
-        }
-        #slang .accent-bar {
-            background: linear-gradient(90deg, #ff5fd2, #7c7cff, #49f2ff);
-        }
-        #az2ii .accent-bar {
-            background: linear-gradient(90deg, #a020f0, #d18bff);
-        }
 
-        /* McDaylight (theme-matched cosmic palette) */
         #mcdaylight .accent-bar {
             background: linear-gradient(90deg, #00f2ff, #7c7cff, #49f2ff);
         }
 
-        /* AiiTONE special */
+        #crow .accent-bar {
+            background: linear-gradient(90deg, #a17fff, #5ac8fa);
+        }
+
+        #slang .accent-bar {
+            background: linear-gradient(90deg, #ff5fd2, #7c7cff, #49f2ff);
+        }
+
+        #abzii .accent-bar {
+            background: linear-gradient(90deg, #00f2ff, #49f2ff, #7c7cff);
+        }
+
+        #az2ii .accent-bar {
+            background: linear-gradient(90deg, #a020f0, #d18bff);
+        }
+
+        /* AiiTONE */
         .aiitone-motion {
             margin: 50px 20px 40px;
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+
         .aiitone-motion:hover {
             transform: translateY(-6px);
         }
+
         .aiitone-motion .text-logo {
             font-family: 'Inter', sans-serif;
             font-size: clamp(3rem, 8.5vw, 5.2rem);
             letter-spacing: -2px;
         }
+
         .aiitone-motion .accent-bar {
             background: linear-gradient(90deg, #7000ff, #00f2ff);
             height: 12px;
@@ -131,71 +147,75 @@
         }
     </style>
 </head>
+
 <body>
 
-    <h1 class="welcome">Welcome to</h1>
+    <h1 class="welcome">Welcome to BlueComet Network</h1>
 
     <!-- BlueCometWork -->
-    <a href="https://about.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="bluecomet">
-        <div class="logo-container">
-            <h1 class="text-logo" style="color: #00f2ff;">🚀 BlueCometWork</h1>
-            <div class="subtitle">ABOUT</div>
-        </div>
+    <a href="https://about.bluecomet.work" class="section" id="bluecomet" target="_blank">
+        <h1 class="text-logo" style="color:#00f2ff;">🚀 BlueCometWork</h1>
+        <div class="subtitle">ABOUT</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- ByteStar -->
-    <a href="https://bytestar.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="bytestar">
-        <div class="logo-container">
-            <h1 class="text-logo" style="color: #00d4ff;">✨ ByteStar</h1>
-            <div class="subtitle">For CSS / JS / HTML</div>
-        </div>
+    <a href="https://bytestar.bluecomet.work" class="section" id="bytestar" target="_blank">
+        <h1 class="text-logo" style="color:#00d4ff;">✨ ByteStar</h1>
+        <div class="subtitle">CSS • JS • HTML</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- McDaylight -->
-    <a href="https://mcdaylight.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="mcdaylight">
-        <div class="logo-container">
-            <h1 class="text-logo" style="background: linear-gradient(90deg, #00f2ff, #7c7cff, #49f2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                McDaylight
-            </h1>
-            <div class="subtitle">Daylight Tools • Clarity • Workflow</div>
-        </div>
+    <a href="https://mcdaylight.bluecomet.work" class="section" id="mcdaylight" target="_blank">
+        <h1 class="text-logo" style="background: linear-gradient(90deg,#00f2ff,#7c7cff,#49f2ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            McDaylight
+        </h1>
+        <div class="subtitle">Daylight Tools • Clarity • Workflow</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- CROW -->
-    <a href="https://crow.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="crow">
-        <div class="logo-container">
-            <h1 class="text-logo" style="background: linear-gradient(90deg, #a17fff, #5ac8fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">CROW</h1>
-            <div class="subtitle">THE World Words Hub<br>— a linguistic kaleidoscope</div>
-        </div>
+    <a href="https://crow.bluecomet.work" class="section" id="crow" target="_blank">
+        <h1 class="text-logo" style="background: linear-gradient(90deg,#a17fff,#5ac8fa); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            CROW
+        </h1>
+        <div class="subtitle">World Words Hub • Linguistic Kaleidoscope</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- SLANG -->
-    <a href="https://slang.bluecomet.work" target="_blank" rel="noopener noreferrer" class="section" id="slang">
-        <div class="logo-container">
-            <h1 class="text-logo" style="background: linear-gradient(90deg, #ff5fd2, #7c7cff, #49f2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">SLANG</h1>
-            <div class="subtitle">Stickers • Logos • Alphabet • Numbers • Glyphs</div>
-        </div>
+    <a href="https://slang.bluecomet.work" class="section" id="slang" target="_blank">
+        <h1 class="text-logo" style="background: linear-gradient(90deg,#ff5fd2,#7c7cff,#49f2ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            SLANG
+        </h1>
+        <div class="subtitle">Stickers • Logos • Alphabet • Numbers • Glyphs</div>
+        <div class="accent-bar"></div>
+    </a>
+
+    <!-- ABZii -->
+    <a href="https://abzii.bluecomet.work" class="section" id="abzii" target="_blank">
+        <h1 class="text-logo" style="background: linear-gradient(90deg,#00f2ff,#49f2ff,#7c7cff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            ABZii 🎵
+        </h1>
+        <div class="subtitle">Media Player • Notes • Capture Ideas</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- AZ2ii -->
-    <a href="https://az2ii.aiitone.net" target="_blank" rel="noopener noreferrer" class="section" id="az2ii">
-        <div class="logo-container">
-            <h1 class="text-logo" style="background: linear-gradient(90deg, #a020f0, #d18bff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">AZ2ii ☔</h1>
-            <div class="subtitle">Purple Rain Protocol</div>
-        </div>
+    <a href="https://az2ii.aiitone.net" class="section" id="az2ii" target="_blank">
+        <h1 class="text-logo" style="background: linear-gradient(90deg,#a020f0,#d18bff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+            AZ2ii ☔
+        </h1>
+        <div class="subtitle">Purple Rain Protocol</div>
         <div class="accent-bar"></div>
     </a>
 
     <!-- AiiTONE -->
-    <a href="https://aiitone.net" target="_blank" rel="noopener noreferrer" class="section">
+    <a href="https://aiitone.net" target="_blank" class="section">
         <div class="aiitone-motion">
-            <h1 class="text-logo" style="background: linear-gradient(90deg, #fff, #00f2ff, #7000ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                AiiTONE<span style="font-size:0.55em; vertical-align: super; margin-left: 4px;">.NET</span>
+            <h1 class="text-logo" style="background: linear-gradient(90deg,#fff,#00f2ff,#7000ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+                AiiTONE<span style="font-size:0.55em; vertical-align: super; margin-left:4px;">.NET</span>
             </h1>
             <div class="accent-bar"></div>
         </div>
